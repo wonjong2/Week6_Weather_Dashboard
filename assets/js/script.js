@@ -32,7 +32,6 @@ function addSearchHistory() {
     var numOfButtons = buttonEls.length;
 
     cityList = JSON.parse(localStorage.getItem("history"));
-    // history = localStorage.getItem("history");
     if(!cityList) {
         cityList = [];
     }
@@ -66,7 +65,7 @@ function addSearchHistory() {
 }
 
 function getWeatherData(cityName) {
-    var requestUrl1 = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid="+ apiKey;
+    var requestUrl1 = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid="+ apiKey;
     var requestUrl2;
 
     fetch(requestUrl1)
@@ -83,7 +82,7 @@ function getWeatherData(cityName) {
             // console.log(dataWeather);
             var iconEl = document.createElement("img");
             todayEl.children[0].textContent = cityName + " (" + moment().format("MM/DD/YYYY)");
-            iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + dataWeather.current.weather[0].icon + "@2x.png");
+            iconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + dataWeather.current.weather[0].icon + "@2x.png");
             iconEl.setAttribute("width", "30");
             iconEl.setAttribute("heith", "30");
             iconEl.setAttribute("alt", "weather-icon");
@@ -120,7 +119,7 @@ function getWeatherData(cityName) {
 
             for(var i = 0; i < 5; i++) {
                 cardBodyEls[i].children[0].textContent = moment.unix(dataWeather.daily[i+1].dt).format("MM/DD/YYYY");
-                cardBodyEls[i].children[1].setAttribute("src", "http://openweathermap.org/img/wn/" + dataWeather.daily[i+1].weather[0].icon + "@2x.png");
+                cardBodyEls[i].children[1].setAttribute("src", "https://openweathermap.org/img/wn/" + dataWeather.daily[i+1].weather[0].icon + "@2x.png");
                 cardBodyEls[i].children[1].setAttribute("width", "30");
                 cardBodyEls[i].children[1].setAttribute("height", "30");
                 cardBodyEls[i].children[1].setAttribute("alt", "1 day later weather icon");
@@ -168,7 +167,6 @@ function firstScreen() {
         var cardText3El = document.createElement("p");
 
         cardEl.className = "card text-white bg-dark mb-3";
-        // cardEl.setAttribute("style", "max-width: 11rem;");
         cardEl.setAttribute("style", "width: 10rem;");
 
         cardBodyEl.className = "card-body";
@@ -196,7 +194,6 @@ function firstScreen() {
     }
 
     cityList = JSON.parse(localStorage.getItem("history"));
-    // history = localStorage.getItem("history");
     if(cityList) {
         for (var j=0; j<cityList.length; j++) {
             var buttonEl = document.createElement("button");
