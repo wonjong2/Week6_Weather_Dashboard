@@ -28,6 +28,11 @@
     padding-left: 10px;
 }
 
+.uvi_box {
+    border-radius: 0.25rem;
+    padding: 2px 5px;
+    color: white
+}
 .uv_green {
     border: 1px green solid;
     background-color: green;
@@ -36,6 +41,7 @@
 .uv_yellow {
     border: 1px yellow solid;
     background-color: yellow;
+    color: black
 }
 
 .uv_orange {
@@ -48,7 +54,22 @@
     background-color: red;
 }
 
-.uv_green {
+.uv_violet {
     border: 1px violet solid;
     background-color: violet;
+}
+
+.city-button {
+    border: gray 1px solid;
+    background-color: gray;
+}
+
+.btn-group-vertical>.btn-group:not(:last-child)>.btn, .btn-group-vertical>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-bottom-right-radius: 0.25rem; 
+    border-bottom-left-radius: 0.25rem;
+}
+
+.btn-group-vertical>.btn-group:not(:first-child)>.btn, .btn-group-vertical>.btn~.btn {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
 }

@@ -4,27 +4,70 @@ var searchEl = document.getElementById("search");
 var searchInputEl = document.getElementById("search-input");
 var cardContainerEl = document.getElementById("card-container");
 var cardBodyEls = document.getElementsByClassName("card-body");
-var history = [];
+var cityList = [];
 var apiKey = "652c7ffa6c3d51e61ec1fd20a0ad3d6e";
 
 searchEl.addEventListener("submit", handleSearchResult);
+historyEl.addEventListener("click", handleCityClick);
+
+function handleCityClick(event) {
+    selectedCityEl = event.target;
+    getWeatherData(selectedCityEl.textContent);
+}
 
 function handleSearchResult (event) {
     event.preventDefault();
-    getWeatherData();
-    addSearchHistory()
+    if(searchInputEl.value === "") {
+        return;
+    }
+    var city = searchInputEl.value;
+    getWeatherData(city);
+    addSearchHistory();
+    searchInputEl.value = "";
 }
 
 function addSearchHistory() {
-    
+    // add the city name on top of the history
+    var buttonEls = document.getElementsByClassName("city-button");
+    var numOfButtons = buttonEls.length;
+
+    cityList = JSON.parse(localStorage.getItem("history"));
+    // history = localStorage.getItem("history");
+    if(!cityList) {
+        cityList = [];
+    }
+
+    cityList.unshift(searchInputEl.value);
+    while(cityList.length > 10) {
+        cityList.pop();
+    }
+    localStorage.setItem("history", JSON.stringify(cityList));
+
+    var maxLength = (cityList.length < 10)?cityList.length:10;
+
+    for(var i = 0; i < maxLength; i++){
+        if((i+1) <= numOfButtons) {
+            buttonEls[i].textContent = cityList[i];
+        }
+        else {
+            var newHistoryEl = document.createElement("button");
+            newHistoryEl.className = "btn btn-primary city-button mx-0 my-1";
+            newHistoryEl.setAttribute("type", "button");
+            newHistoryEl.textContent = cityList[i];
+            historyEl.appendChild(newHistoryEl);
+        }
+    }
+
+    if(numOfButtons > cityList.length) {
+        for (var j = 0; j < numOfButtons-cityList.length; j++) {
+            historyEl.removeChild(historyEl.lastElementChild)
+        }
+    }
 }
 
-function getWeatherData() {
-    var cityName = searchInputEl.value;
+function getWeatherData(cityName) {
     var requestUrl1 = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid="+ apiKey;
     var requestUrl2;
-
-    // searchInputEl.value = "";
 
     fetch(requestUrl1)
     .then(function (response) {
@@ -48,7 +91,32 @@ function getWeatherData() {
             todayEl.children[1].textContent = "Temp: " + dataWeather.current.temp + " °F";
             todayEl.children[2].textContent = "Wind: " + dataWeather.current.wind_speed + " MPH";
             todayEl.children[3].textContent = "Humidity: " + dataWeather.current.humidity + " %";
-            todayEl.children[4].textContent = "UV Index: " + dataWeather.current.uvi;
+            todayEl.children[4].children[0].textContent = dataWeather.current.uvi;
+            switch(Math.round(dataWeather.current.uvi)) {
+                case 0:
+                case 1:
+                case 2:
+                    todayEl.children[4].children[0].className = "uvi_box uv_green";
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    todayEl.children[4].children[0].className = "uvi_box uv_yellow";
+                    break;
+                case 6:
+                case 7:
+                    todayEl.children[4].children[0].className = "uvi_box uv_orange";
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    todayEl.children[4].children[0].className = "uvi_box uv_red";
+                    break;  
+                default:
+                    todayEl.children[4].children[0].className = "uvi_box uv_violet";
+                    break;  
+            }
+
 
             for(var i = 0; i < 5; i++) {
                 cardBodyEls[i].children[0].textContent = moment.unix(dataWeather.daily[i+1].dt).format("MM/DD/YYYY");
@@ -83,9 +151,12 @@ function firstScreen() {
     humidityEl.textContent = "Humidity: --";
     todayEl.appendChild(humidityEl);
 
-    var uvEl = document.createElement("p");
-    uvEl.textContent = "UV Index: --";
-    todayEl.appendChild(uvEl);
+    var uviEl = document.createElement("p");
+    var valueEl = document.createElement("span");
+    valueEl.textContent = "--";
+    uviEl.textContent = "UV Index: ";
+    uviEl.appendChild(valueEl);
+    todayEl.appendChild(uviEl);
 
     for(var i = 0; i < 5; i++){
         var cardEl = document.createElement("div");
@@ -97,7 +168,8 @@ function firstScreen() {
         var cardText3El = document.createElement("p");
 
         cardEl.className = "card text-white bg-dark mb-3";
-        cardEl.setAttribute("style", "max-width: 11rem;");
+        // cardEl.setAttribute("style", "max-width: 11rem;");
+        cardEl.setAttribute("style", "width: 10rem;");
 
         cardBodyEl.className = "card-body";
 
@@ -123,19 +195,20 @@ function firstScreen() {
         cardContainerEl.appendChild(cardEl);
     }
 
-    history = JSON.parse(localStorage.getItem("history"));
-    if(!history) {
-        // var liEl;
-        for (var j=0; j<history.length; j++) {
-            var buttonEl;
-            // liEl = document.createElement("li");
-            buttonEl = document.createElement("botton");
-            buttonEl.className = "btn btn-primary";
+    cityList = JSON.parse(localStorage.getItem("history"));
+    // history = localStorage.getItem("history");
+    if(cityList) {
+        for (var j=0; j<cityList.length; j++) {
+            var buttonEl = document.createElement("button");
+            buttonEl.className = "btn btn-primary city-button mx-0 my-1";
             buttonEl.setAttribute("type", "button");
-            buttonEl.textContent = history[j];
+            buttonEl.textContent = cityList[j];
             historyEl.appendChild(buttonEl);
         }
-    }    
+    }
+    else {
+        cityList = [];
+    }
 }
 
 firstScreen();
