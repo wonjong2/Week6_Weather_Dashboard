@@ -5,7 +5,7 @@ var searchInputEl = document.getElementById("search-input");
 var cardContainerEl = document.getElementById("card-container");
 var cardBodyEls = document.getElementsByClassName("card-body");
 var cityList = [];
-var apiKey = config.API_KEY;
+var apiKey = "652c7ffa6c3d51e61ec1fd20a0ad3d6e";
 
 searchEl.addEventListener("submit", handleSearchResult);
 historyEl.addEventListener("click", handleCityClick);
