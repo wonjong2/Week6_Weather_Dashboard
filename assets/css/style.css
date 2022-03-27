@@ -1,0 +1,54 @@
+:root {
+    --white-font: white;
+}
+
+.custom-navbar {
+    font-size: 2rem;
+    background-image: linear-gradient(to right, blue, darkblue);
+    color: var(--white-font);
+}
+
+.h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.navbar>.container-fluid {
+    justify-content: center;
+}
+
+.custom-btn {
+    background-color: rgb(94, 132, 235);
+    color: var(--white-font);;
+}
+
+.today-weather {
+    border: 1px black solid;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.uv_green {
+    border: 1px green solid;
+    background-color: green;
+}
+
+.uv_yellow {
+    border: 1px yellow solid;
+    background-color: yellow;
+}
+
+.uv_orange {
+    border: 1px orange solid;
+    background-color: orange;
+}
+
+.uv_red {
+    border: 1px red solid;
+    background-color: red;
+}
+
+.uv_green {
+    border: 1px violet solid;
+    background-color: violet;
+}
