@@ -28,7 +28,7 @@ https://wonjong2.github.io/Week6_Weather_Dashborad/
     - A searched city name is added to the search history
     - The search history will be maintained even though the browser refreshes/restarts
 - It shows current weather and 5 days forecast
-    - Current Weather inclues :
+    - Current Weather includes :
         * Date : Month/Day/Year
         * Weather Icon, Temp(°F), Wind(MPH), Humidity(%)
         * And UV Index with matched color (Refer to https://www.who.int/uv/publications/en/UVIGuide.pdf)        
