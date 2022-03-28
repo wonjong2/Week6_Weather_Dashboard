@@ -40,8 +40,18 @@ https://wonjong2.github.io/Week6_Weather_Dashborad/
         * Weather Icon, Temp(°F), Wind(MPH), Humidity(%)
 - When a user clicks one of the cities in the search history, it shows current weather and 5 days forecast for that city
 
-- __Simple Demo__ : https://watch.screencastify.com/v/SX4udWebezWQlfWVNqSI
+- __Simple Demo__ : https://watch.screencastify.com/v/gYyi4I19Nh9Z107FzLo0
 
 Please see the screenshots on this Website.
 
-![firstscreen](/assets/images/screenshot.png)
+- First Screen
+![first-screen](/assets/images/firstscreen.png)
+
+- Search Result with valid city name
+![valid-city-result](/assets/images/SearchResult.png)
+
+- Search Result with invalid city name
+![invalid-city-result](/assets/images/invalidcityname.png)
+
+- Select the city in the search hitory
+![select-one-in-search-history](/assets/images/selecthistory.png)

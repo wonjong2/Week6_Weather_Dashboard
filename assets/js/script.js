@@ -28,7 +28,7 @@ function handleSearchResult (event) {
     searchInputEl.value = "";
 }
 
-function addSearchHistory() {
+function addSearchHistory(cityName) {
     // add the city name on top of the history
     var buttonEls = document.getElementsByClassName("city-button");
     var numOfButtons = buttonEls.length;
@@ -40,7 +40,7 @@ function addSearchHistory() {
     }
 
     // add the city to the beginning of the cityList array
-    cityList.unshift(searchInputEl.value);
+    cityList.unshift(cityName);
     // Max number of the cityList limited 10
     while(cityList.length > 10) {
         cityList.pop();
@@ -84,7 +84,7 @@ function getWeatherData(cityName, needToAddHistory) {
     .then(function (data) {
         // if entered city is not found, display confirm popup and return
         if(data.length === 0) {
-            confirm("The city you entered could not be found. Please check again.");
+            alert("The city you entered could not be found. Please check again.");
             return;
         }
         // if it gets proper lat and lon data, request to fetch weather data using the Onecall API
@@ -152,7 +152,7 @@ function getWeatherData(cityName, needToAddHistory) {
 
             // add the city to the search history
             if(needToAddHistory === true) {
-                addSearchHistory();
+                addSearchHistory(cityName);
             }
         });
     });
