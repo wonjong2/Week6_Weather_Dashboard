@@ -20,10 +20,10 @@ function handleCityClick(event) {
 // execute this function when a user searches a city name
 function handleSearchResult (event) {
     event.preventDefault();
-    if(searchInputEl.value === "") {
+    if(searchInputEl.value.trim() === "") {
         return;
     }
-    var city = searchInputEl.value;
+    var city = searchInputEl.value.trim();
     getWeatherData(city, true);
     searchInputEl.value = "";
 }
