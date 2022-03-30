@@ -81,7 +81,15 @@ function getWeatherData(cityName, needToAddHistory) {
     // request to fetch lat and lon of the city using the Geocoding API
     fetch(requestUrl1)
     .then(function (response) {
-        return response.json();
+        if(response.ok) {
+            return response.json();
+        }
+        else {
+            alert("Error: " + responseWeather.statusText);
+        }
+    })
+    .catch(function (error) {
+        alert("Please check your data connection and try it later");
     })
     .then(function (data) {
         // if entered city is not found, display confirm popup and return
@@ -93,7 +101,15 @@ function getWeatherData(cityName, needToAddHistory) {
         requestUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data[0].lat + "&lon=" + data[0].lon + "&exclude=minutely,hourly,alerts&appid=" + apiKey + "&units=imperial";
         fetch(requestUrl2)
         .then(function (responseWeather) {
-            return responseWeather.json();
+            if(responseWeather.ok) {
+                return responseWeather.json();
+            }
+            else {
+                alert("Error: " + responseWeather.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert("Please check your data connection and try it later");
         })
         .then(function (dataWeather) {
             // configure current weather contents
