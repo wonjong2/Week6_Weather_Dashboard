@@ -1,4 +1,4 @@
-# Week6_Weather_Dashborad
+# Week6_Weather_Dashboard
 
 ## Description
 
