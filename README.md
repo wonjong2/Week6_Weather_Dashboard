@@ -40,7 +40,7 @@ https://wonjong2.github.io/Week6_Weather_Dashborad/
         * Weather Icon, Temp(°F), Wind(MPH), Humidity(%)
 - When a user clicks one of the cities in the search history, it shows current weather and 5 days forecast for that city
 
-- __Simple Demo__ : https://watch.screencastify.com/v/gYyi4I19Nh9Z107FzLo0
+- __Simple Demo__ : https://watch.screencastify.com/v/q8SSCtv0sS3xjGt8idvM
 
 Please see the screenshots on this Website.
 
