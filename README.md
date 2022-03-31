@@ -16,10 +16,10 @@ This Web site provides current weather and 5 days forecast for the city that a u
 ## Web Site's URL
 
 - Weather Dashboard : 
-https://wonjong2.github.io/Week6_Weather_Dashborad/
+https://wonjong2.github.io/Week6_Weather_Dashboard/
 
 ## Git Hub URL for this Web Site
-- wonjong2/Week5_Work_Day_Scheduler : https://github.com/wonjong2/Week6_Weather_Dashborad
+- wonjong2/Week5_Work_Day_Scheduler : https://github.com/wonjong2/Week6_Weather_Dashboard
 
 ## Usage
 
