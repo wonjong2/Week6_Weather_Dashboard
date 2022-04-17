@@ -11,43 +11,43 @@ var apiKey = "652c7ffa6c3d51e61ec1fd20a0ad3d6e";
 searchEl.addEventListener("submit", handleSearchResult);
 historyEl.addEventListener("click", handleCityClick);
 
-// execute this function when a user click the one of the cities in the search history
+// Execute this function when a user click the one of the cities in the search history
 function handleCityClick(event) {
     selectedCityEl = event.target;
     getWeatherData(selectedCityEl.textContent, false);
 }
 
-// execute this function when a user searches a city name
+// Execute this function when a user searches a city name
 function handleSearchResult (event) {
     event.preventDefault();
-    // if empty input, return
+    // If empty input, return
     if(searchInputEl.value.trim() === "") {
         return;
     }
     var city = searchInputEl.value.trim();
-    // initialize input value
+    // Initialize input value
     searchInputEl.value = "";
     getWeatherData(city, true);
 }
 
 function addSearchHistory(cityName) {
-    // add the city name on top of the history
+    // Add the city name on top of the history
     var buttonEls = document.getElementsByClassName("city-button");
     var numOfButtons = buttonEls.length;
 
-    // load the stored history from the local storage
+    // Load the stored history from the local storage
     cityList = JSON.parse(localStorage.getItem("history"));
     if(!cityList) {
         cityList = [];
     }
 
-    // add the city to the beginning of the cityList array
+    // Add the city to the beginning of the cityList array
     cityList.unshift(cityName);
     // Max number of the cityList limited 10
     while(cityList.length > 10) {
         cityList.pop();
     }
-    // store the lastest search history to the local storage
+    // Store the lastest search history to the local storage
     localStorage.setItem("history", JSON.stringify(cityList));
 
     var maxLength = (cityList.length < 10)?cityList.length:10;
@@ -66,7 +66,7 @@ function addSearchHistory(cityName) {
         }
     }
 
-    // if the number of the history elements is greater than the length of the cityList array, remove useless elements
+    // If the number of the history elements is greater than the length of the cityList array, remove useless elements
     if(numOfButtons > cityList.length) {
         for (var j = 0; j < numOfButtons-cityList.length; j++) {
             historyEl.removeChild(historyEl.lastElementChild)
@@ -78,7 +78,7 @@ function getWeatherData(cityName, needToAddHistory) {
     var requestUrl1 = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid="+ apiKey;
     var requestUrl2;
 
-    // request to fetch lat and lon of the city using the Geocoding API
+    // Request to fetch lat and lon of the city using the Geocoding API
     fetch(requestUrl1)
     .then(function (response) {
         if(response.ok) {
@@ -92,12 +92,12 @@ function getWeatherData(cityName, needToAddHistory) {
         alert("Please check your data connection and try it later");
     })
     .then(function (data) {
-        // if entered city is not found, display confirm popup and return
+        // If entered city is not found, display confirm popup and return
         if(data.length === 0) {
             alert("The city you entered could not be found. Please check again.");
             return;
         }
-        // if it gets proper lat and lon data, request to fetch weather data using the Onecall API
+        // If it gets proper lat and lon data, request to fetch weather data using the Onecall API
         requestUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data[0].lat + "&lon=" + data[0].lon + "&exclude=minutely,hourly,alerts&appid=" + apiKey + "&units=imperial";
         fetch(requestUrl2)
         .then(function (responseWeather) {
@@ -112,21 +112,21 @@ function getWeatherData(cityName, needToAddHistory) {
             alert("Please check your data connection and try it later");
         })
         .then(function (dataWeather) {
-            // configure current weather contents
+            // Configure current weather contents
             var iconEl = document.createElement("img");
             // city name + date info.
             todayEl.children[0].textContent = cityName + " (" + moment().format("MM/DD/YYYY)");
-            // icon represented current weather
+            // Icon represented current weather
             iconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + dataWeather.current.weather[0].icon + "@2x.png");
             iconEl.setAttribute("width", "30");
             iconEl.setAttribute("heith", "30");
             iconEl.setAttribute("alt", "weather-icon");
             todayEl.children[0].appendChild(iconEl);
-            // current Temp, Wind and Humidity info.
+            // Current Temp, Wind and Humidity info.
             todayEl.children[1].textContent = "Temp: " + dataWeather.current.temp + " °F";
             todayEl.children[2].textContent = "Wind: " + dataWeather.current.wind_speed + " MPH";
             todayEl.children[3].textContent = "Humidity: " + dataWeather.current.humidity + " %";
-            // current UV index with a color
+            // Current UV index with a color
             todayEl.children[4].children[0].textContent = dataWeather.current.uvi;
             switch(Math.round(dataWeather.current.uvi)) {
                 case 0:
@@ -153,9 +153,9 @@ function getWeatherData(cityName, needToAddHistory) {
                     break;  
             }
 
-            // configure 5 days forecast contents with cards format
+            // Configure 5 days forecast contents with cards format
             for(var i = 0; i < 5; i++) {
-                // date
+                // Date
                 cardBodyEls[i].children[0].textContent = moment.unix(dataWeather.daily[i+1].dt).format("MM/DD/YYYY");
                 // Weather icon
                 cardBodyEls[i].children[1].setAttribute("src", "https://openweathermap.org/img/wn/" + dataWeather.daily[i+1].weather[0].icon + "@2x.png");
@@ -168,7 +168,7 @@ function getWeatherData(cityName, needToAddHistory) {
                 cardBodyEls[i].children[4].textContent = "Humidity: " + dataWeather.daily[i+1].humidity + " %";
             }
 
-            // add the city to the search history
+            // Add the city to the search history
             if(needToAddHistory === true) {
                 addSearchHistory(cityName);
             }
@@ -176,9 +176,9 @@ function getWeatherData(cityName, needToAddHistory) {
     });
 }
 
-// configure the first screen when the web site is loading at the first time
+// Configure the first screen when the web site is loading at the first time
 function firstScreen() {
-    // configure current weather contents with empty data
+    // Configure current weather contents with empty data
     var titleEl = document.createElement("h3");
     titleEl.textContent = "-------- " + moment().format("MM/DD/YYYY ");
     titleEl.className = "fw-bold";
@@ -203,7 +203,7 @@ function firstScreen() {
     uviEl.appendChild(valueEl);
     todayEl.appendChild(uviEl);
 
-    // configure 5 days forecast contents with empty data
+    // Configure 5 days forecast contents with empty data
     for(var i = 0; i < 5; i++){
         var cardEl = document.createElement("div");
         var cardBodyEl = document.createElement("div");
@@ -240,7 +240,7 @@ function firstScreen() {
         cardContainerEl.appendChild(cardEl);
     }
 
-    // get the stored data in local storage and configure the search history contents
+    // Get the stored data in local storage and configure the search history contents
     cityList = JSON.parse(localStorage.getItem("history"));
     if(cityList) {
         for (var j=0; j<cityList.length; j++) {
